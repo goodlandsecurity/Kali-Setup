@@ -38,6 +38,6 @@ class InstallerTemplate:
         run_command('chown -R samba:smbgroup /var/samba/')
         run_command('chmod -R 0755 /var/samba/')
         run_command('touch /etc/printcap')
-        run_command('systemctl stop smbd')
-        run_command('systemctl disable smbd')
+        run_command('systemctl enable --now smbd')
+        run_command('systemctl restart smbd')
         print_success("Done!", 1)
