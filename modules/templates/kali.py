@@ -50,5 +50,4 @@ class InstallerTemplate:
 
         print_status(f"Enabling SSH Server", 1)
         run_command("systemctl enable --now ssh")
-        #file_replace('/etc/ssh/sshd_config', '^.*PasswordAuthentication .*', 'PasswordAuthentication yes')
         print_success("Done!", 1)
