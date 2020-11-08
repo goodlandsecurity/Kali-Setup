@@ -48,6 +48,7 @@ class InstallerTemplate:
             run_command('gsettings set org.gnome.desktop.session idle-delay 0')
         print_success("Done!", 1)
 
-        print_status("Allowing root SSH login", 1)
-        file_replace('/etc/ssh/sshd_config', '^.*PermitRootLogin .*', 'PermitRootLogin yes')
+        print_status(f"Enabling SSH Server", 1)
+        run_command("systemctl enable --now ssh")
+        #file_replace('/etc/ssh/sshd_config', '^.*PasswordAuthentication .*', 'PasswordAuthentication yes')
         print_success("Done!", 1)
