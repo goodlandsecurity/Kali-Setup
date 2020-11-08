@@ -50,6 +50,8 @@ class InstallerTemplate:
         'smicallef/spiderfoot',
         'rofl0r/proxychains-ng',
         'scipag/vulscan',
+        'maurosoria/dirsearch',
+        'calebstewart/python-htb',
     ]
 
     _ADDITIONAL_INSTRUCTIONS = {
@@ -66,7 +68,13 @@ class InstallerTemplate:
             'cd /opt/rofl0r_proxychains-ng-git/; make -s install',
             'ln -sf /usr/bin/proxychains4 /usr/local/bin/proxychains-ng'
         ],
-        'scipag/vulscan': ['ln -s /opt/scipag_vulscan-git /usr/share/nmap/scripts/vulnscan']
+        'scipag/vulscan': ['ln -s /opt/scipag_vulscan-git /usr/share/nmap/scripts/vulnscan'],
+        'maurosoria/dirsearch': ['ln -s /opt/maurosoria_dirsearch-git/dirsearch.py /usr/local/bin/dirsearch'],
+        'calebstewart/python-htb': [
+            'cd /opt/calebstewart_python-htb-git/',
+            'python3 -m pip install .',
+            'python3 -m pip install python-networkmanager pysher'
+        ],
     }
 
     def check(self, config):
