@@ -7,6 +7,8 @@ class InstallerTemplate:
     _REPOS_TO_ADD = {
         "mongodb-org-4.2": "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main",
         "sublime-text": "deb https://download.sublimetext.com/ apt/stable/",
+        "neo4j": "deb https://debian.neo4j.com stable 4.0",
+        "i2p": "deb https://deb.i2p2.no/ unstable main",
     }
 
     _PACKAGES = {
@@ -44,13 +46,20 @@ class InstallerTemplate:
         "Sublime Text 3": ["sublime-text"],
         "SSH Server": ["openssh-server"],
         "bridge utils": ["bridge-utils"],
-        "Mobile Tools": ["aapt", "abe", "adb", "apktool", "burp", "bytecode-viewer", "enjarify", "file", "gedit", "ideviceinstaller", "smali", "sqlite3"]
+        "Mobile Tools": ["aapt", "abe", "adb", "apktool", "burp", "bytecode-viewer", "enjarify", "file", "gedit", "ideviceinstaller", "smali", "sqlite3"],
+        "xRDP": ["xrdp"],
+        "htop": ["htop"],
+        "tree": ["tree"],
+        "BloodHound": ["neo4j, npm"],
+        "anonsurf": ["libservlet3.1-java"],
     }
 
     _COMMANDS_BEFORE = {
         "Adding MongoDB repo key": ["wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -"],
         "Adding sublime repo key": ["wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -"],
         "Adding x86 repos": ["dpkg --add-architecture i386"],
+        "Adding Neo4j repo key": ["wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -"],
+        "Adding I2P repo key": ["wget -O - https://geti2p.net/_static/i2p-debian-repo.key.asc | sudo apt-key add -"]
     }
 
     _COMMANDS_AFTER = {
@@ -58,6 +67,11 @@ class InstallerTemplate:
         "Updating IEEE oui list": ["airodump-ng-oui-update"],
         "Adding index to web server": ['echo "It works" > /var/www/html/index.html'],
         "Generating SSH key": ["sudo -E -u {0} ssh-keygen -b 4096 -t rsa -f ~/.ssh/id_rsa -P ''".format(get_user())],
+        "Enabling and restarting xRDP service": ["systemctl enable --now xrdp", "adduser xrdp ssl-cert", "systemctl restart xrdp"],
+        "Downloading I2P dependencies": [
+            "wget http://ftp.us.debian.org/debian/pool/main/j/jetty9/libjetty9-java_9.4.33-1_all.deb", 
+            "dpkg -i libjetty9-java_9.4.33-1_all.deb", 
+            "rm libjetty9-java_9.4.33-1_all.deb"],
     }
 
     def check(self, config):
