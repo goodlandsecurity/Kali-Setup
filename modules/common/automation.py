@@ -43,6 +43,15 @@ def github_clone(repo, dest_folder):
     cmd = 'git clone --recurse-submodules https://github.com/{0}.git {1}'.format(repo, escape(dest_folder))
     return run_command(cmd)
 
+def github_clone_option(option, repo, dest_folder):
+    if not dest_folder.endswith('/'):
+        dest_folder += "/"
+    if option:
+        cmd = 'git clone {0} https://github.com/{1}.git {2}'.format(option, repo, dest_folder)
+    else:
+        cmd = 'git clone https://github.com/{0}.git {1}'.format(repo, dest_folder)
+    return run_command(cmd)
+
 def file_download(location, destination, safe=False):
     if _DRY_RUN and not safe:
         print_status("Would have downloaded {0} to {1}".format(location, destination), 1)
@@ -108,6 +117,13 @@ def file_append(filename, content):
         return
     with open(filename, 'a') as f:
         f.write("\n"+content)
+
+def file_append_no_new_line(filename, content):
+    if _DRY_RUN:
+        print_status("Would have appended the following to '{0}':\n---------------\n{1}\n---------------\n".format(filename, content))
+        return
+    with open(filename, 'a') as f:
+        f.write(content)
 
 def file_append_once(filename, content, search=""):
     if search == "":
