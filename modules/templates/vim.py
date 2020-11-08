@@ -40,5 +40,11 @@ class InstallerTemplate:
         file_append_or_replace('/etc/vim/vimrc', '.*set invnumber.*', ':nmap <F8> :set invnumber<CR>')
         file_append_or_replace('/etc/vim/vimrc', '.*set pastetoggle=<F9>.*', 'set pastetoggle=<F9>')
         file_append_or_replace('/etc/vim/vimrc', '.*:command Q q.*', ':command Q q')
+        github_clone_option(option='', repo='joshdick/onedark.vim', dest_folder='/tmp/onedark')
+        make_dir('{0}/.vim/colors'.format(get_home_folder()))
+        make_dir('{0}/.vim/autoload'.format(get_home_folder()))
+        run_command('cp /tmp/onedark/colors/onedark.vim {0}/.vim/colors/'.format(get_home_folder()))
+        run_command('cp /tmp/onedark/autoload/onedark.vim {0}/.vim/autoload/'.format(get_home_folder()))
+        file_append('/etc/vim/vimrc', 'highlight Normal ctermbg=None')
+        file_append('/etc/vim/vimrc', 'highlight LineNr ctermfg=DarkGrey')
         print_success("Done!", 1)
-        
